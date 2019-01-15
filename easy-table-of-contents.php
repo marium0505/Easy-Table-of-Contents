@@ -434,10 +434,12 @@ if ( ! class_exists( 'ezTOC' ) ) {
 			$numbered_items_min               = $current_depth;
 
 			for ( $i = 0; $i < count( $matches ); $i ++ ) {
-
+				
+				$headningscounter = $i + 1;
+				$headingslevel = $matches[ $i ][2];
 				if ( $current_depth == (int) $matches[ $i ][2] ) {
 
-					$html .= '<li>';
+					$html .= '<li class="ez-toc ez-toc-headings-main ez-toc-heading-level-' . $current_depth . '">';
 				}
 
 				// start lists
@@ -446,7 +448,7 @@ if ( ! class_exists( 'ezTOC' ) ) {
 					for ( $current_depth; $current_depth < (int) $matches[ $i ][2]; $current_depth++ ) {
 
 						$numbered_items[ $current_depth + 1 ] = 0;
-						$html .= '<ul><li>';
+						$html .= '<ul class="ez-toc ez-toc-main-parent-list ez-toc-heading-level-' . $headingslevel . '"><li class="ez-toc  ez-toc-parent-list ez-toc-heading-level-' . $headingslevel . '">>';
 					}
 				}
 
@@ -458,7 +460,7 @@ if ( ! class_exists( 'ezTOC' ) ) {
 
 					//$html .= '<a href="#' . self::url_anchor_target( $title ) . '">';
 					$html .= sprintf(
-						'<a href="%1$s" title="%2$s">',
+						'<a class="ez-toc ez-toc-link ez-toc-heading-level-' . $headingslevel . ' ez-toc-Headning-Number-' . $headningscounter . '" href="%1$s" title="%2$s">',
 						esc_url( '#' . self::url_anchor_target( $matches[ $i ][0] ) ),
 						esc_attr( strip_tags( $title ) )
 					);
